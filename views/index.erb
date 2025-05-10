@@ -1,0 +1,116 @@
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Just a copy-paste from app/views/layouts/application.html.erb of the original app -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script> <!-- for inline JSX -->
+    
+
+
+    <!-- Just a copy-paste from config/tailwind.config.js of the original app -->
+    <script type="text/javascript">
+      const defaultTheme = tailwind.defaultTheme
+      const plugin = tailwind.plugin
+
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              'crocodile': '#507150',
+              'mad': '#F34723',
+              'brown': '#715050',
+              'grayblue': '#505071'
+              
+            },
+            fontFamily: {
+              sans: ['LXGW WenKai Mono TC', ...defaultTheme.fontFamily.sans],
+              mad: ['Russo One'],
+            },
+          },
+        },
+        plugins: [
+          plugin(function({ addBase }) {
+            addBase({
+              html: { fontSize: '1.3rem' },
+            })
+          }),
+        ],
+      }
+    </script>
+
+    <!-- Just a copy-paste from config/tailwind.config.js of the original app -->
+    <!-- FONTS IMPORT -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=LXGW+WenKai+Mono+TC&family=Russo+One&display=swap" rel="stylesheet">
+    <!-- /FONTS_IMPORT -->
+  </head>
+
+  <body>
+   <script type="text/babel">
+      // We need a click handler to allow browser to play the audio
+      window.Runner = ({ component }) => {
+        const [playing, setPlaying] = React.useState(false)
+
+        if (!playing) {
+          return (
+          <div className="flex flex-col items-center justify-center h-screen">
+            <div className="flex flex-col items-center justify-center mb-4">
+              <p className="mb-2">Привет!</p>
+              <p className="mb-4">Нажми на кнопку чтобы начать игру</p>
+            </div>
+            <div className="flex space-x-4 items-center justify-center">   
+            <button className="bg-green-500 text-white p-2 rounded" onClick={() => {
+              setPlaying(true)
+            }}>Играть</button>
+            </div>
+
+          </div>
+          )
+        }
+
+        return React.createElement(
+          component, {
+            onResponse: () =>  {
+              alert("Response received")
+            },
+            solutionPath: "/solution",
+            talkUrl: "/beep.mp3"
+          }
+        )
+      }
+    </script>
+
+    <!-- Just a copy-paste from app/views/layouts/application.html.erb of the original app -->
+    <div class="min-h-screen flex flex-col">
+      <div class="bg-crocodile h-1"></div>
+
+      <div class="p-1.5 bg-crocodile bg-opacity-40">
+        <div class="container mx-auto max-w-xl flex justify-between">
+          <h1 class="font-mad text-md p-0 pointer-events-none">
+            <span class="text-mad">MAD</span> <span class="text-crocodile">CROCODILE</span>
+          </h1>
+        </div>
+      </div>
+
+      <div class="p-1.5 pb-2 bg-crocodile bg-opacity-20">
+        <div class="container mx-auto max-w-xl">
+          <span class="bg-grayblue text-white p-1 rounded opacity-50 hover:opacity-100 transition-opacity duration-300">Учебная</span>
+          <span class="bg-brown text-white p-1 rounded opacity-50 hover:opacity-100 transition-opacity duration-300">Родительская</span>
+        </div>
+      </div>
+
+      <div class="grow px-3 p-2 bg-crocodile bg-opacity-10">
+        <div class="container mx-auto max-w-xl flex justify-center">
+          <%= screen.render %>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

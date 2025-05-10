@@ -1,0 +1,69 @@
+<div id="<%= screen.class.name %>" data-payload="<%= screen.payload.to_json %>"></div>
+
+<script type="text/babel">
+
+  const countObject = document.getElementById("Screen::CountObject")
+  
+  const DIGITS = [1, 2, 4];
+
+  const fruits = [
+  { src: "https://images.emojiterra.com/google/noto-emoji/unicode-16.0/color/512px/1f34f.png", alt: "greenapple" },
+  { src: "https://images.emojiterra.com/google/noto-emoji/unicode-16.0/color/512px/1f34e.png", alt: "redapple" },
+  { src: "https://images.emojiterra.com/google/noto-emoji/unicode-16.0/color/512px/1f34c.png", alt: "banana" },
+  { src: "https://images.emojiterra.com/google/noto-emoji/unicode-16.0/color/512px/1f34b.png", alt: "lemon" },
+  { src: "https://images.emojiterra.com/google/noto-emoji/unicode-16.0/color/512px/1f95d.png", alt: "kiwi" },
+  { src: "https://images.emojiterra.com/google/noto-emoji/unicode-16.0/color/512px/1f351.png", alt: "peach" }
+];
+
+  const CountObject = ({ onResponse, solutionPath, talkUrl }) => {
+    React.useEffect(() => {
+      const talk = new Audio(talkUrl)
+      talk.play()
+    }, [])
+
+    return ( // TODO: make it responsive
+      <div className="flex flex-col items-center justify-between space-y-6 mt-6">
+      	<div className="flex flex-wrap justify-center gap-4">
+      		<p>Сколько зеленых фруктов?</p>
+      	</div>
+      	<div className="flex flex-wrap justify-center gap-4">
+      		{fruits.map((fruit, index) => (
+      			<img
+      				key={index}
+      				src={fruit.src}
+      				alt={fruit.alt}
+      				className="w-14 h-auto hover:scale-110 transtion-transform"
+      			/>
+      		))}
+      	</div>
+
+        <div className="flex flex-wrap justify-between gap-4">
+        {DIGITS.map((digit) => (
+         	<button
+         	key={digit}
+            className="text-2xl font-bold px-4 py-2 border border-amber-500 rounded bg-lime-50 hover:bg-amber-500 hover:scale-105 w-auto"
+            onClick={() => {
+              onResponse()
+              if (digit === 2) {
+              	window.location.href = `${solutionPath}?answer=${digit}&nextGame=true`;
+              } else {
+              	window.location.href = `${solutionPath}?answer=${digit}`
+              }
+              
+            }}
+          >
+            {digit}
+        	</button>
+        ))}
+    	</div>
+      </div>
+    )
+  }
+
+  ReactDOM.render(
+    <React.StrictMode>
+      <Runner component={CountObject} />
+    </React.StrictMode>,
+    countObject
+  )
+</script>
